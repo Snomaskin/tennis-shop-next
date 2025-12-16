@@ -47,28 +47,28 @@ export default function CartNav() {
   };
 
   return (
+    <div 
+      ref={cartRef}
+      className={classNames("cart-nav", {
+        "is-clicked": isClicked,
+        "is-hovered": isSelected && !isClicked
+        })
+      }
+      onMouseEnter={() => setIsSelected(true)} 
+      onMouseLeave={handleMouseLeave}
+    >
       <div 
-        ref={cartRef}
-        className={classNames("cart-nav", {
-          "is-clicked": isClicked,
-          "is-hovered": isSelected && !isClicked
-          })
-        }
-        onMouseEnter={() => setIsSelected(true)} 
-        onMouseLeave={handleMouseLeave}
+        className="cart-clicker"
+        onClick={handleClick}
       >
-        <div 
-          className="cart-clicker"
-          onClick={handleClick}
-        >
-          <Image className="cart-icon" src={cartIcon} alt="Cart" />
-          <div className="cart-counter">{totalCart}</div>
-        </div>
-        <AnimatePresence>
-          {isSelected === true &&
-          <CartContainer hideCart={handleHideCartUI} />
-          }
-        </AnimatePresence>
-    </div>
+        <Image className="cart-icon" src={cartIcon} alt="Cart" />
+        <div className="cart-counter">{totalCart}</div>
+      </div>
+      <AnimatePresence>
+        {isSelected === true &&
+        <CartContainer hideCart={handleHideCartUI} />
+        }
+      </AnimatePresence>
+  </div>
   );
 };
