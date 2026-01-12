@@ -1,21 +1,24 @@
 import { get } from "../fetcher";
 import { WooCommerceProduct, Category } from "@/types/products";
-import createUrlWithQuery from "@/api/utils/createUrlWithQuery";
-import findCategoryBySlug from "./utils/findCategoryBySlug";
+import createUrlWithQuery from "../utils/createUrlWithQuery";
+import getCategoryId from "./utils/getCategoryId";
 
 const BASE_URL = "http://test.local/wp-json/wc/store/products";
 
-async function fetchAll(productsCap = 100) {
-  return get<WooCommerceProduct[]>(createUrlWithQuery(BASE_URL, { "per_page": productsCap }));
+async function getAllProducts(productsCap = 100): Promise<WooCommerceProduct[]> {
+  const res = await get(createUrlWithQuery(BASE_URL, { "per_page": productsCap }));
+  return res.json();
 }
 
-async function fetchCategories() {
-  return get<Category[]>(createUrlWithQuery(BASE_URL + "/categories"));
+async function getProductsByCategory(categorySlug: string, params?: Record<string, string | number>): Promise<WooCommerceProduct[]> {
+  const categoryId = await getCategoryId(categorySlug);
+  const res = await get(createUrlWithQuery(BASE_URL, { "category": categoryId, ...params }))
+  return res.json();
 }
 
-async function fetchProductsBySlug(slug: string, params?: Record<string, string | number>) {
-  const categoryId = await findCategoryBySlug(slug);
-  return get<WooCommerceProduct[]>(createUrlWithQuery(BASE_URL, { "category": categoryId, ...params }));
+async function getProductCategories(): Promise<Category[]> {
+  const res = await get(createUrlWithQuery(BASE_URL + "/categories"));
+  return res.json();
 }
 
-export { fetchAll, fetchCategories, fetchProductsBySlug }
+export { getAllProducts, getProductCategories, getProductsByCategory }

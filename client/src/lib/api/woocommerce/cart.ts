@@ -3,17 +3,24 @@ import type { WooCommerceCart } from "@/types/cart";
 
 const BASE_URL = "http://test.local/wp-json/wc/store/cart";
 
-
-async function fetchCart() {
-  return get<WooCommerceCart>(BASE_URL);
+async function getCart(): Promise<WooCommerceCart> {
+  const res = await get(BASE_URL);
+  return res.json();
 }
 
-async function addToCart(productId: number, quantity = 1) {
-  return post<WooCommerceCart>(BASE_URL + "/add-item", { id: productId, quantity });
+async function addItem(id: number, quantity = 1): Promise<WooCommerceCart> {
+  const res = await post(BASE_URL + "/add-item", { id, quantity });
+  return res.json();
 }
 
-async function removeFromCart (productKey: string) {
-  return post<WooCommerceCart>(BASE_URL + "/remove-item", { key: productKey });
+async function removeItem (key: string): Promise<WooCommerceCart> {
+  const res = await post(BASE_URL + "/remove-item", { key });
+  return res.json();
 }
 
-export { fetchCart, addToCart, removeFromCart }
+async function updateItem (key: string, quantity: number): Promise<WooCommerceCart> {
+  const res = await post(BASE_URL + "/update-item", { key, quantity });
+  return res.json();
+}
+
+export { getCart, addItem, removeItem, updateItem }
