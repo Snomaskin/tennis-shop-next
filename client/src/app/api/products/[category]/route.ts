@@ -1,7 +1,8 @@
 import { getProductsByCategory } from "@/lib/api/woocommerce/products";
+import { use } from "react";
 
 async function GET({ params }: { params: Promise<{ category: string }> }) {
-  const { category } = await params;
+  const { category } = use(params);
   return getProductsByCategory(category);
 }
 

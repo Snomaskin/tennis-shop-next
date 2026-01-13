@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { Cart, WooCommerceCart } from "@/types/cart";
-import { fetchCart, addToCart, removeFromCart } from "@/api/woocommerce/cart";
-import { createCart } from "@/api/woocommerce/utils/cart";
+import { getCart, addItem, removeItem } from "@/lib/api/woocommerce/cart";
+import { createCart } from "@/lib/api/woocommerce/utils/cart";
 import { FetchStatus } from "@/types/general";
 import { getErrorMessage } from "@/utils/errors";
 
@@ -35,9 +35,9 @@ const useCart = create<CartState>((set, get) => {
     fetchStatus: "idle",
     errorMessage: null,
 
-    loadCart: () => runCartAction(() => fetchCart()),
-    addItem: (productId, quantity) => runCartAction(() => addToCart(productId, quantity)),
-    removeItem: (itemKey) => (runCartAction(() => removeFromCart(itemKey))),
+    loadCart: () => runCartAction(() => getCart()),
+    addItem: (productId, quantity) => runCartAction(() => addItem(productId, quantity)),
+    removeItem: (itemKey) => (runCartAction(() => removeItem(itemKey))),
     clearCart: () => {
       const items = get().cart?.items;
       if (!items) return;
