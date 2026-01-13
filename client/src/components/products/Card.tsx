@@ -5,6 +5,7 @@ import { useCart } from "@/stores/useCart";
 
 export default function Card({ product }: { product: Product }) {
   const addItem  = useCart.getState().addItem;
+  console.log(product.image.src)
   
   return (
     <article
@@ -22,6 +23,7 @@ export default function Card({ product }: { product: Product }) {
         alt={product.name}
         width={100}
         height={100}
+        unoptimized={process.env.NODE_ENV === 'development'}
       />
 
       <span className="text-lg font-medium text-gray-800 mb-1 line-clamp-2">

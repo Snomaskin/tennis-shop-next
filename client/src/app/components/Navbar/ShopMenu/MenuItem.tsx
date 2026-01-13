@@ -14,6 +14,7 @@ export default function MenuItem({ item }: { item: Category }) {
         width={100}
         height={100}
         className="w-8 h-8 object-contain hover:scale-110 duration-200"
+        unoptimized={process.env.NODE_ENV === 'development'}
       />
     </Link>
   );

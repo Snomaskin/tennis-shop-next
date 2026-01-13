@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
       {
         protocol: 'http',
         hostname: 'test.local',
-        pathname: '/wp-content/**',
       },
     ],
   },
