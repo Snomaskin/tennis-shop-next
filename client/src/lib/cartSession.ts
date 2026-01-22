@@ -1,14 +1,24 @@
 import { cookies } from "next/headers";
-import { randomUUID } from "crypto";
 
-export async function getOrCreateCartSession() {
+export type CartSession = {
+  cookieHeader: string;
+  cartToken: string;
+};
+
+export async function getOrSetCartCookie(): Promise<CartSession> {
   const cookieStore = await cookies();
-  let sessionId = cookieStore.get("cart_session")?.value;
+  let token = cookieStore.get("cart_token")?.value;
 
-  if (!sessionId) {
-    sessionId = randomUUID();
+  if (!token) {
+    const res = await fetch("http://test.local/wp-json/wc/store/cart");
+    const newToken = res.headers.get("Cart-Token");
 
-    cookieStore.set("cart_session", sessionId, {
+    if (!newToken) {
+      throw new Error("'Cart-Token' header missing");
+    }
+
+    token = newToken;
+    cookieStore.set("cart_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -17,5 +27,8 @@ export async function getOrCreateCartSession() {
     });
   }
 
-  return sessionId;
+  return {
+    cookieHeader: `cart_token=${token}`,
+    cartToken: token,
+  };
 }

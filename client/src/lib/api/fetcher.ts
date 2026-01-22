@@ -1,45 +1,43 @@
-interface FetcherOptions extends RequestInit {
+interface FetcherArgs {
   url: string;
-  cookies?: string;
-};
-
-async function fetcher({ url, cookies, ...options }: FetcherOptions) {
-  try {
-    console.log("url", url)
-    const res = await fetch(url, {
-      ...options,
-      headers:{
-        "Content-Type": "application/json",
-        ...(cookies ? { cookie: cookies } : {}),
-        ...(options.headers ?? {})
-      },
-      credentials: options.credentials ?? "include"
-    });
-    if (!res.ok) {
-      const message = await res.text();
-      throw new Error(`API error: ${res.status} ${message}`);
-    }
-    return res;
-  } catch (e) {
-    console.error("Server error", e);
-    
-    if (e instanceof Error) throw e;
-    throw new Error(String(e));
-  }
+  options?: RequestInit;
 }
 
-async function get(endpoint: string) {
+async function fetcher({ url, options }: FetcherArgs): Promise<Response> {
+  const res = await fetch(url, options);
+
+  if (!res.ok) {
+    const message = await res.text();
+    throw new Error(`API error: ${res.status} ${message}`);
+  }
+
+  return res;
+}
+
+async function get(endpoint: string, options?: RequestInit): Promise<Response> {
   return fetcher({
-    url: endpoint, 
-    method: "GET",
+    url: endpoint,
+    options: {
+      method: "GET",
+      ...options,
+    },
   });
 }
 
-async function post(endpoint: string, data: object) {
+async function post(endpoint: string, options?: RequestInit & { data?: object }): Promise<Response> {
+  const { data, ...fetchOptions } = options || {};
+
   return fetcher({
-    url: endpoint, 
-    method: "POST",
-    body: JSON.stringify(data)
+    url: endpoint,
+    options: {
+      method: "POST",
+      body: JSON.stringify(data ?? {}),
+      headers: {
+        "Content-Type": "application/json",
+        ...(fetchOptions?.headers ?? {}),
+      },
+      ...options,
+    },
   });
 }
 

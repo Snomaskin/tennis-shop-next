@@ -1,10 +1,14 @@
-interface AddToCartRequest {
+import { CartSession } from "@/lib/session";
+
+interface AddToWooCartRequest {
   productId: number;
   quantity?: number;
+  session: CartSession;
 }
 
-interface UpdateCartItemRequest {
+interface UpdateWooCartItemRequest {
   quantity: number;
+  session: CartSession;
 }
 
-export type { AddToCartRequest, UpdateCartItemRequest }
+export type { AddToWooCartRequest, UpdateWooCartItemRequest }
