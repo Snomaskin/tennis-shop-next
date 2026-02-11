@@ -9,12 +9,15 @@ function createCart(rawCart: WooCommerceCart): Cart {
       name: item.name,
       image: item.images?.[0] ?? { id: 0, src: "" },
       prices: {
-        price: item.prices.price,
-        regular_price: item.prices.regular_price,
-        sale_price: item.prices.sale_price,
+        price: Number(item.prices.price) / 100,
+        regular_price: Number(item.prices.regular_price) / 100,
+        sale_price: Number(item.prices.sale_price) / 100,
       },
     })),
-    totals: { total_items: rawCart.totals.total_items},
+    totals: { 
+      total_items: Number(rawCart.totals.total_items),
+      total_price: Number(rawCart.totals.total_price) / 100,
+    },
     items_count: rawCart.items_count,
   }
 }

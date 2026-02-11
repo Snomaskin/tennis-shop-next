@@ -41,4 +41,38 @@ async function post(endpoint: string, options?: RequestInit & { data?: object })
   });
 }
 
-export { get, post }
+async function del(endpoint: string, options?: RequestInit & { data?: object }): Promise<Response> {
+  const { data, ...fetchOptions } = options || {};
+
+  return fetcher({
+    url: endpoint,
+    options: {
+      method: "DELETE",
+      body: JSON.stringify(data ?? {}),
+      headers: {
+        "Content-Type": "application/json",
+        ...(fetchOptions?.headers ?? {}),
+      },
+      ...options,
+    },
+  });
+}
+
+async function patch(endpoint: string, options?: RequestInit & { data?: object }): Promise<Response> {
+  const { data, ...fetchOptions } = options || {};
+
+  return fetcher({
+    url: endpoint,
+    options: {
+      method: "PATCH",
+      body: JSON.stringify(data ?? {}),
+      headers: {
+        "Content-Type": "application/json",
+        ...(fetchOptions?.headers ?? {}),
+      },
+      ...options,
+    },
+  });
+}
+
+export { get, post, del, patch }

@@ -5,6 +5,14 @@ export type CartSession = {
   cartToken: string;
 };
 
+const cookieSettings = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+    } as const;
+
 export async function getOrSetCartCookie(): Promise<CartSession> {
   const cookieStore = await cookies();
   let token = cookieStore.get("cart_token")?.value;
@@ -18,13 +26,17 @@ export async function getOrSetCartCookie(): Promise<CartSession> {
     }
 
     token = newToken;
-    cookieStore.set("cart_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 30,
-    });
+    cookieStore.set("cart_token", token, cookieSettings);
+  } else if (token) {
+    const verifyToken = await fetch("http://test.local/wp-json/wc/store/cart", {
+      headers: {
+        "Cart-Token": token
+      }
+    }).then(res => res.headers.get("Cart-Token"));
+    if (verifyToken && token != verifyToken) {
+      token = verifyToken;
+      cookieStore.set("cart_token", token, cookieSettings);
+    }
   }
 
   return {

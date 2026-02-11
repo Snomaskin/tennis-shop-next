@@ -14,6 +14,8 @@ type Cart = {
   items: CartItem[];
   totals: {
     total_items: number;
+    total_price: number;
+
   };
   items_count: number;
 };
@@ -30,7 +32,10 @@ type WooCommerceCart = {
       regular_price: number; 
       sale_price: number };
   }[];
-  totals: { total_items: number };
+  totals: { 
+    total_items: number;
+    total_price: number;
+  };
   items_count: number;
 };
 

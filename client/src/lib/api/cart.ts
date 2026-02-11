@@ -1,5 +1,5 @@
 import type { WooCommerceCart } from "@/types/cart";
-import { get, post } from "./fetcher";
+import { get, post, del, patch } from "./fetcher";
 
 export async function getCart(): Promise<WooCommerceCart> {
   const res = await get("/api/cart");
@@ -12,6 +12,11 @@ export async function addItem(productId: number, quantity = 1): Promise<WooComme
 }
 
 export async function removeItem(itemKey: string): Promise<WooCommerceCart> {
-  const res = await post(`/api/cart/items/${itemKey}`);
+  const res = await del(`/api/cart/items/${itemKey}`);
+  return res.json();
+}
+
+export async function updateItemQuantity(itemKey: string, quantity = 1): Promise<WooCommerceCart> {
+  const res = await patch("/api/cart/items", {data: { "key": itemKey, "quantity": quantity} });
   return res.json();
 }
