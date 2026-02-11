@@ -1,7 +1,6 @@
 
 const navItems = [
-  {key: "cart", label: "Cart", href: "/Cart"},
-  {key: "checkout", label: "Checkout", href: "/Checkout"},
+  {key: "about", label: "About us", href: "/about"},
 ];
 
 export {navItems}
