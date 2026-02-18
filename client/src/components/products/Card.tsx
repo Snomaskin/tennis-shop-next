@@ -1,11 +1,10 @@
 "use client"
 import { Product } from "@/types/products";
 import Image from "next/image";
-import { useCart } from "@/stores/useCart";
+import { useCartAddItem } from "@/stores/useCart";
 
 export default function Card({ product }: { product: Product }) {
-  const addItem  = useCart.getState().addItem;
-  console.log(product.image.src)
+  const addItem  = useCartAddItem();
   
   return (
     <article
