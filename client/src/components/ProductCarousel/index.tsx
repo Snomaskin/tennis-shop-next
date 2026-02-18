@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Product } from "@/types/products";
-import { Card } from "./Card";
+import Card from "./Card";
 import { Observer } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger, Observer);
@@ -35,7 +35,6 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
       const render = () => {
         itemsRef.current.forEach((el, i) => {
           const angle = baseAngles[i] + rotation.current.value;
-
           const depth = Math.cos(angle);
           const scale = map(depth, -1, 1, SCALE_MAX, SCALE_MIN);
           const radiusScale = map(depth, -1, 1, 3, 1);
@@ -46,8 +45,10 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
           const bend = (x / (scaledRadius * 1.4)) ** 2 * bendAmount;
           const y = Math.cos(angle) * scaledRadius * 0.5 + bend;
           gsap.set(el, {
-            x: x,
-            y: y,
+            x,
+            y,
+            force3D: true,
+            willChange: "transform",
             xPercent: 500,
             yPercent: 800,
             scale,
@@ -56,14 +57,12 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
       };
 
       const loop = gsap.to(rotation.current, {
-        value: "+=99999",
-        duration: 99999,
-        ease: "none",
+        value: `+=${Math.PI * 2}`,
+        duration: 10,
         repeat: -1,
+        ease: "none",
         onUpdate: render,
       });
-
-      loop.timeScale(0);
 
       const slow = gsap.to(loop, { timeScale: 0, duration: 0.5 });
 
@@ -85,7 +84,6 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
 
   return (
     <div
-      ref={wheelRef}
       style={{
         height: "100vh",
         overflow: "hidden",

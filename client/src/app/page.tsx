@@ -3,8 +3,10 @@ import { getAllProducts } from "@/lib/api/woocommerce/products";
 import { createProducts } from "@/lib/api/woocommerce/utils/products";
 
 export default async function TennisShopLanding() {
-  const products = await getAllProducts()
-    .then((p) => createProducts(p))
+  const products = await getAllProducts(30)
+    .then((p) => {
+      return createProducts(p);
+    })
     .catch((e) => {
       throw e;
     });
