@@ -3,7 +3,8 @@ import { use } from "react";
 
 async function GET({ params }: { params: Promise<{ category: string }> }) {
   const { category } = use(params);
-  return getProductsByCategory(category);
+  const products = await getProductsByCategory(category);
+  return Response.json(products);
 }
 
-export { GET }
+export { GET };
