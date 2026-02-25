@@ -1,21 +1,37 @@
 import CartMenu from "./CartMenu";
-import NavbarLayout from "./NavbarLayout";
 import NavItem from "./NavItem";
 import { navItems } from "./navItems";
-import ShopMenu from "./ShopMenu";
-import { getProductCategories } from "@/lib/api/woocommerce/products";
+import {
+  getProductCategories,
+  getProductsByCategory,
+} from "@/lib/api/woocommerce/products";
+import NavbarClient from "./NavbarClient";
 
 export default async function Navbar() {
   const shopCategories = await getProductCategories();
-  const menus = [
-    <ShopMenu key={"shop"} menuItems={shopCategories} />,
-    <CartMenu key={"cart"} />
-  ];
+  const menus = [<CartMenu key={"cart"} />];
 
-  const staticItems = navItems.map(item => (
-    <NavItem key={item.key} label={item.label} href={item.href} />));
+  const shopMenus = await Promise.all(
+    shopCategories.map(async (cat) => ({
+      key: cat.id,
+      category: cat,
+      products: await getProductsByCategory(cat.slug),
+    })),
+  );
+
+  const staticItems = navItems.map((item) => (
+    <NavItem
+      key={item.key}
+      label={item.label}
+      href={item.href}
+      imgUrl={item.imgUrl}
+    />
+  ));
 
   return (
-    <NavbarLayout navItems={[...menus, ...staticItems]}/>
+    <NavbarClient
+      shopMenus={shopMenus}
+      otherItems={[...menus, ...staticItems]}
+    />
   );
 }
