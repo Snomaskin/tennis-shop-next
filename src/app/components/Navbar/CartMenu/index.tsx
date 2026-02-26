@@ -16,7 +16,7 @@ export default function CartMenu() {
   useOutsideClick(cartRef, () => setIsOpen(false));
 
   return (
-    <nav onClick={() => setIsOpen((prev) => !prev)}>
+    <nav onClick={() => setIsOpen((prev) => !prev)} className="shrink-0">
       <NavItemWithToggle
         label="Cart"
         imgUrl={cartIcon}

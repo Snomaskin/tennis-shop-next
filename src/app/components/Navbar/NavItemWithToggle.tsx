@@ -3,6 +3,7 @@ import { ReactNode, useState, useRef, useEffect } from "react";
 import NavItem from "./NavItem";
 import useOutsideClick from "@/lib/utils/useOutsideClick";
 import { StaticImageData } from "next/image";
+import positionElementToScreen from "@/lib/utils/positionElementToScreen";
 
 export interface NavItemWithToggleProps {
   label: string;
@@ -34,7 +35,6 @@ export default function NavItemWithToggle({
 
   const menuRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [translateX, setTranslateX] = useState<string | null>(null);
 
   useOutsideClick(menuRef, () => {
     controlled ? onClose?.() : setInternalOpen(false);
@@ -54,25 +54,9 @@ export default function NavItemWithToggle({
     return () => clearTimeout(timer);
   }, [open]);
 
-  // Posistioning to stop overflow on screen resize:
   useEffect(() => {
     if (!open) return;
-
-    const handleResize = () => {
-      if (!dropdownRef.current) return;
-      const rect = dropdownRef.current.getBoundingClientRect();
-
-      if (rect.right > window.innerWidth) {
-        const overflow = rect.right - window.innerWidth;
-        setTranslateX(`-${overflow + 15}px`);
-      } else {
-        setTranslateX("0px");
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return positionElementToScreen(dropdownRef);
   }, [open]);
 
   const handleClick = () => {
@@ -100,10 +84,7 @@ export default function NavItemWithToggle({
 
       <div
         ref={dropdownRef}
-        style={{
-          transform: translateX ? `translateX(${translateX})` : undefined,
-        }}
-        className={`absolute top-full left-0 max-w-96 pt-3 transition-transform ${
+        className={`absolute top-full left-0 max-w-96 pt-3 ${
           open ? "block" : "hidden"
         }`}
       >
