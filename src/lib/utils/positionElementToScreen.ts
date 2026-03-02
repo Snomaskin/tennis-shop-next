@@ -13,10 +13,13 @@ export default function positionElementToScreen(
     }
   };
 
-  handleResize();
+  const resizeObserver = new ResizeObserver(handleResize);
+  if (ref.current) resizeObserver.observe(ref.current);
+
   window.addEventListener("resize", handleResize);
 
   return () => {
+    resizeObserver.disconnect();
     window.removeEventListener("resize", handleResize);
   };
 }
