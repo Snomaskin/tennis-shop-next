@@ -20,11 +20,14 @@ export default function NavbarClient({ shopMenus, otherItems }: Props) {
       imgUrl={menu.category.image.src}
       href={`/shop/${menu.category.slug}`}
       isOpen={openKey === menu.key}
-      onOpen={() => setOpenKey(menu.category.id)}
-      onClose={() => setOpenKey(null)}
+      onOpen={() => setOpenKey(menu.key)}
+      onClose={() => setOpenKey((k) => (k === menu.category.id ? null : k))}
     >
       <div className="relative top-2 left-1/2 z-50 mx-auto flex h-30 w-70 max-w-7xl -translate-x-1/2 items-center justify-center rounded-2xl bg-white shadow-md">
-        <EmblaCarousel products={menu.products} />
+        <EmblaCarousel
+          products={menu.products}
+          onClick={() => setOpenKey((k) => (k === menu.category.id ? null : k))}
+        />
       </div>
     </NavItemWithToggle>
   ));

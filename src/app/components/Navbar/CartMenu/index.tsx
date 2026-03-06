@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 import CartContainer from "./CartContainer";
 import { useCartData } from "@/stores/useCart";
-import useOutsideClick from "@/lib/utils/useOutsideClick";
 import NavItemWithToggle from "../NavItemWithToggle";
 import cartIcon from "@/assets/cart.png";
 
@@ -13,14 +12,17 @@ export default function CartMenu() {
   const cart = useCartData();
   const totalCart = cart?.items_count;
   const hasItems = typeof totalCart === "number" && totalCart > 0;
-  useOutsideClick(cartRef, () => setIsOpen(false));
 
   return (
-    <nav onClick={() => setIsOpen((prev) => !prev)} className="shrink-0">
+    <nav className="shrink-0">
       <NavItemWithToggle
         label="Cart"
         imgUrl={cartIcon}
         badge={hasItems ? totalCart : undefined}
+        isOpen={isOpen}
+        onClick={() => setIsOpen(true)}
+        onClose={() => setIsOpen(false)}
+        onOpen={() => setIsOpen(true)}
       >
         <div
           ref={cartRef}
@@ -29,7 +31,7 @@ export default function CartMenu() {
           }
         >
           <AnimatePresence>
-            {isOpen && <CartContainer hideCart={() => setIsOpen(false)} />}
+            <CartContainer hideCart={() => setIsOpen(false)} />
           </AnimatePresence>
         </div>
       </NavItemWithToggle>
