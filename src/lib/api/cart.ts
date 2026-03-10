@@ -6,8 +6,13 @@ export async function getCart(): Promise<WooCommerceCart> {
   return res.json();
 }
 
-export async function addItem(productId: number, quantity = 1): Promise<WooCommerceCart> {
-  const res = await post("/api/cart/items", {data: { "productId": productId, "quantity": quantity} });
+export async function addItem(
+  productId: number,
+  quantity = 1,
+): Promise<WooCommerceCart> {
+  const res = await post("/api/cart/items", {
+    data: { productId: productId, quantity: quantity },
+  });
   return res.json();
 }
 
@@ -16,7 +21,12 @@ export async function removeItem(itemKey: string): Promise<WooCommerceCart> {
   return res.json();
 }
 
-export async function updateItemQuantity(itemKey: string, quantity = 1): Promise<WooCommerceCart> {
-  const res = await patch("/api/cart/items", {data: { "key": itemKey, "quantity": quantity} });
+export async function updateItemQuantity(
+  itemKey: string,
+  quantity = 1,
+): Promise<WooCommerceCart> {
+  const res = await patch(`/api/cart/items/${itemKey}`, {
+    data: { key: itemKey, quantity: quantity },
+  });
   return res.json();
 }

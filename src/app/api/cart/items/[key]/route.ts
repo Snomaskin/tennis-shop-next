@@ -2,7 +2,10 @@ import { removeWooItem, updateWooItem } from "@/lib/api/woocommerce/cart";
 import type { UpdateWooCartItemRequest } from "@/types/api";
 import { getOrSetCartCookie } from "@/lib/cartSession";
 
-export async function DELETE(req: Request, { params }: { params: Promise<{ key: string }> }) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ key: string }> },
+) {
   const { key } = await params;
   const session = await getOrSetCartCookie();
   const cart = await removeWooItem(key, session);
@@ -12,6 +15,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ key: 
 export async function PATCH(req: Request) {
   const body = await req.json();
   const { key, quantity }: UpdateWooCartItemRequest = body;
+  console.log(key, quantity);
   const session = await getOrSetCartCookie();
   const cart = await updateWooItem(key, quantity, session);
   return Response.json(cart);
