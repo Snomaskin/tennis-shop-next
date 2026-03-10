@@ -45,7 +45,12 @@ export default function EmblaCard({
                 >
                   <Card
                     product={product}
-                    onButtonClick={() => setIsSelected(false)}
+                    cardStyles={{
+                      classNames: "hover:translate-y-0 hover:shadow-none",
+                    }}
+                    footerStyles={{
+                      className: "min-w-66 min-h-12",
+                    }}
                   />
                 </motion.div>
               </ScreenOverlay>,

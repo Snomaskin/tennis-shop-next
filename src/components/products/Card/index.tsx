@@ -1,21 +1,35 @@
 "use client";
 import { Product } from "@/types/products";
 import Image from "next/image";
-import { useCartAddItem } from "@/stores/useCart";
+import ProductQuantityControl from "./ProductQuantityControl";
+import { twMerge } from "tailwind-merge";
 
-export default function Card({
-  product,
-  onButtonClick,
-}: {
+type Props = {
   product: Product;
-  onButtonClick?: () => void;
-}) {
-  const addItem = useCartAddItem();
+  cardStyles?: {
+    classNames?: string;
+  };
+  footerStyles: {
+    className?: string;
+    classNames?: {
+      container?: string;
+      addButton?: string;
+      plusMinusButtons?: string;
+      input?: string;
+    };
+  };
+};
 
+export default function Card({ product, cardStyles, footerStyles }: Props) {
   return (
-    <article className="flex flex-col items-start rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+    <article
+      className={twMerge(
+        "flex flex-col items-start rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md",
+        cardStyles?.classNames,
+      )}
+    >
       <Image
-        className="mb-4 h-48 w-full rounded-xl object-contain"
+        className="mb-4 max-h-48 w-full rounded-xl object-contain"
         src={product.image.src}
         alt={product.name}
         width={100}
@@ -31,15 +45,7 @@ export default function Card({
         ${product.prices.price.toFixed(2)}
       </p>
 
-      <button
-        className="mt-auto w-full cursor-pointer rounded-xl bg-blue-600 py-2 font-medium text-white transition-colors hover:bg-blue-700"
-        onClick={() => {
-          onButtonClick?.();
-          addItem(product.id);
-        }}
-      >
-        Buy
-      </button>
+      <ProductQuantityControl product={product} styles={footerStyles} />
     </article>
   );
 }
