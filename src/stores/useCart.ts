@@ -3,7 +3,7 @@ import { useShallow } from "zustand/shallow";
 import { Cart, WooCommerceCart } from "@/types/cart";
 import { createCart } from "@/lib/api/woocommerce/utils/cart";
 import { FetchStatus } from "@/types/general";
-import { getErrorMessage } from "@/lib/utils/errors";
+import { getErrorMessageAsync } from "@/lib/utils/errors";
 import {
   getCart,
   addItem,
@@ -32,7 +32,7 @@ const useCart = create<CartState>((set, get) => {
       const tennisCart = createCart(wooCommerceCart);
       set({ cart: tennisCart, fetchStatus: "success" });
     } catch (e) {
-      const errorMessage = getErrorMessage(e);
+      const errorMessage = await getErrorMessageAsync(e);
       set({ errorMessage, fetchStatus: "error" });
     }
   };

@@ -1,23 +1,23 @@
 interface Props {
   label: string;
   onClick: () => void;
-  variant?: 'primary' | 'secondary';
+  variant?: "primary" | "secondary";
   disabled?: boolean;
 }
 
 export default function MenuButton({ label, onClick }: Props) {
-
   return (
     <button
-      onClick={onClick}
-      className={`w-full px-6 py-4 rounded-xl font-semibold duration-300  shadow-lg hover:shadow-xl
-        bg-yellow-100 hover:bg-yellow-200 text-neutral-900 border-2 border-neutral-200 hover:border-neutral-300 shadow-neutral-200/30 hover:shadow-neutral-300/40 relative overflow-hidden group cursor-pointer`}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick();
+      }}
+      className={`group relative w-full cursor-pointer overflow-hidden rounded-xl border-2 border-neutral-200 bg-yellow-100 px-6 py-4 font-semibold text-neutral-900 shadow-lg shadow-neutral-200/30 duration-300 hover:border-neutral-300 hover:bg-yellow-200 hover:shadow-xl hover:shadow-neutral-300/40`}
     >
-
       <span className="relative z-10 flex items-center justify-center gap-2">
         {label}
         <svg
-          className="w-5 h-5 group-hover:translate-x-1 group-hover:scale-190 duration-300"
+          className="h-5 w-5 duration-300 group-hover:translate-x-1 group-hover:scale-190"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -30,7 +30,6 @@ export default function MenuButton({ label, onClick }: Props) {
           />
         </svg>
       </span>
-
     </button>
   );
 }

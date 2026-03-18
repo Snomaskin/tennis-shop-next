@@ -12,4 +12,12 @@ interface UpdateWooCartItemRequest {
   session: CartSession;
 }
 
-export type { AddToWooCartRequest, UpdateWooCartItemRequest }
+interface CheckoutResponseBody {
+  data: { order_id: number; status: string };
+}
+
+export type {
+  AddToWooCartRequest,
+  UpdateWooCartItemRequest,
+  CheckoutResponseBody,
+};

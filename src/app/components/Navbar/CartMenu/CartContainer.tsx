@@ -42,7 +42,10 @@ export default function CartContainer({ hideCart }: { hideCart: () => void }) {
             </h2>
           </div>
           <button
-            onClick={hideCart}
+            onClick={(e) => {
+              e.stopPropagation();
+              hideCart();
+            }}
             className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-500 transition-all duration-200 hover:rotate-90 hover:cursor-pointer hover:bg-neutral-100 hover:text-neutral-700"
           >
             <X className="h-5 w-5" />
