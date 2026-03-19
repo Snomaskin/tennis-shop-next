@@ -1,6 +1,6 @@
 import { useCartState, useCartActions } from "@/stores/useCart";
 import { useEffect } from "react";
-import EmptyCart from "@/components/Cart/EmptyCart";
+import EmptyCart from "./EmptyCart";
 import Error from "@/components/ErrorMessage";
 import CartContent from "./CartContent";
 import MenuButton from "./MenuButton";
