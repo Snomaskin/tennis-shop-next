@@ -29,7 +29,6 @@ export default function EmblaCard({
           src={product.image.src}
           alt={product.name}
           fill
-          unoptimized={process.env.NODE_ENV === "development"}
         />
       </motion.div>
 

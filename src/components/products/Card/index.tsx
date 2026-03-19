@@ -9,7 +9,7 @@ type Props = {
   cardStyles?: {
     classNames?: string;
   };
-  footerStyles: {
+  footerStyles?: {
     className?: string;
     classNames?: {
       container?: string;
@@ -34,7 +34,6 @@ export default function Card({ product, cardStyles, footerStyles }: Props) {
         alt={product.name}
         width={100}
         height={100}
-        unoptimized={process.env.NODE_ENV === "development"}
       />
 
       <span className="mb-1 line-clamp-2 text-lg font-medium text-gray-800">

@@ -29,13 +29,7 @@ export default function NavItem({
       <button className={className} onClick={onClick}>
         {imgUrl ? (
           <div className="relative px-4">
-            <Image
-              src={imgUrl}
-              alt={label}
-              width={25}
-              height={25}
-              unoptimized={process.env.NODE_ENV === "development"}
-            />
+            <Image src={imgUrl} alt={label} width={25} height={25} />
             {badge && (
               <span className="absolute -top-2.5 right-4 text-sm text-green-600">
                 {badge}
@@ -53,13 +47,7 @@ export default function NavItem({
     <Link className={className} href={href || "#"}>
       {imgUrl ? (
         <div className="relative px-4">
-          <Image
-            src={imgUrl}
-            alt={label}
-            width={25}
-            height={25}
-            unoptimized={process.env.NODE_ENV === "development"}
-          />
+          <Image src={imgUrl} alt={label} width={25} height={25} />
           {badge && (
             <span className="absolute -top-2.5 right-4 text-sm text-green-600">
               {badge}
