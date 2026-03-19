@@ -6,6 +6,7 @@ import CartItem from "@/app/components/Navbar/CartMenu/CartItem";
 import { useCheckout } from "../hooks/useCheckout";
 import { checkoutSteps } from "@/config/checkout/checkoutSteps";
 import { MoveLeft, MoveRight, MapPin, CreditCard } from "lucide-react";
+import { useEffect } from "react";
 
 export default function Review() {
   const cart = useCartData();
@@ -13,7 +14,7 @@ export default function Review() {
   const shippingValues = getValues("shipping");
   const paymentValues = getValues("payment");
   const { next, prev, stepIndex } = useCheckout();
-  const prevStepLabel = checkoutSteps[stepIndex - 1].label;
+  const prevStepLabel = checkoutSteps[stepIndex - 1]?.label;
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center gap-4 px-4 pt-22 pb-5">

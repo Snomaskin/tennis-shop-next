@@ -1,15 +1,22 @@
 "use client";
-import { useCartData } from "@/stores/useCart";
+import { useCartReset, useCartData } from "@/stores/useCart";
 import CartItem from "@/app/components/Navbar/CartMenu/CartItem";
 import { PackageCheck, Truck, MapPin, CircleAlert } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { CheckoutFormSchema } from "@/config/checkout/checkoutSchema";
 import { useCheckout } from "../hooks/useCheckout";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function OrderConfirmation() {
   const cart = useCartData();
-  const { httpStatus, orderId, errorMessage } = useCheckout();
+  const resetCart = useCartReset();
+  const {
+    httpStatus,
+    orderId,
+    errorMessage,
+    reset: resetCheckout,
+  } = useCheckout();
   const { getValues } = useFormContext<CheckoutFormSchema>();
   const shippingValues = getValues("shipping");
 
@@ -88,6 +95,10 @@ export default function OrderConfirmation() {
                   <a
                     href="/"
                     className="group flex cursor-pointer items-center gap-2 rounded-xl border-2 border-transparent bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:border-yellow-300"
+                    onClick={() => {
+                      resetCheckout();
+                      resetCart();
+                    }}
                   >
                     Continue Shopping
                   </a>

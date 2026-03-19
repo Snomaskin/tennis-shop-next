@@ -20,7 +20,7 @@ export default function Overview() {
         </p>
       </div>
 
-      {cart ? (
+      {cart && (
         <div className="flex w-full max-w-2xl flex-col gap-4">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {cart.items.map((item) => (
@@ -50,8 +50,6 @@ export default function Overview() {
             </button>
           </div>
         </div>
-      ) : (
-        <LoadingScreen />
       )}
     </div>
   );
