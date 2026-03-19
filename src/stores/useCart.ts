@@ -48,12 +48,11 @@ const useCart = create<CartState>((set, get) => {
     removeItem: (itemKey) => runCartAction(() => removeItem(itemKey)),
     updateItemQuantity: (itemKey, quantity) =>
       runCartAction(() => updateItemQuantity(itemKey, quantity)),
-    clearCart: () => {
+    clearCart: async () => {
       const items = get().cart?.items;
       if (!items) return;
-
       for (const item of items) {
-        get().removeItem(item.key);
+        await get().removeItem(item.key);
       }
     },
     resetCart: () =>

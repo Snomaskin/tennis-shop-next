@@ -1,17 +1,16 @@
-import { get } from "../fetcher";
 import { Category, Product } from "@/types/products";
-import createUrlWithQuery from "../utils/createUrlWithQuery";
+import { woo } from "../kyApi";
 import getCategoryId from "./utils/getCategoryId";
 import { createProducts } from "./utils/products";
 
-const BASE_URL = "http://test.local/wp-json/wc/store/products";
-
 async function getAllProducts(productsCap = 100): Promise<Product[]> {
-  const res = await get(
-    createUrlWithQuery(BASE_URL, [{ per_page: productsCap }]),
-  );
-  const products = createProducts(await res.json());
-  return products;
+  const data = await woo
+    .get("products", {
+      searchParams: { per_page: productsCap },
+    })
+    .json<any[]>();
+
+  return createProducts(data);
 }
 
 async function getProductsByCategory(
@@ -19,16 +18,21 @@ async function getProductsByCategory(
   params?: Record<string, string | number>,
 ): Promise<Product[]> {
   const categoryId = await getCategoryId(categorySlug);
-  const res = await get(
-    createUrlWithQuery(BASE_URL, [{ category: categoryId }, { ...params }]),
-  );
-  const products = createProducts(await res.json());
-  return products;
+
+  const data = await woo
+    .get("products", {
+      searchParams: {
+        category: categoryId,
+        ...params,
+      },
+    })
+    .json<any[]>();
+
+  return createProducts(data);
 }
 
 async function getProductCategories(): Promise<Category[]> {
-  const res = await get(createUrlWithQuery(BASE_URL + "/categories"));
-  return res.json();
+  return woo.get("products/categories").json<Category[]>();
 }
 
 export { getAllProducts, getProductCategories, getProductsByCategory };

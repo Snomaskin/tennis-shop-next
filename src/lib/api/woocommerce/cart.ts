@@ -1,20 +1,20 @@
-import { get, post } from "../fetcher";
+import { woo } from "../kyApi";
 import type { WooCommerceCart } from "@/types/cart";
 import type { CartSession } from "@/lib/cartSession";
-import createUrlWithQuery from "../utils/createUrlWithQuery";
 
-const BASE_URL = "http://test.local/wp-json/wc/store/cart";
-
-function createCartHeaders(session: CartSession): Headers {
-  return new Headers({
+function createCartHeaders(session: CartSession) {
+  return {
     Cookie: session.cookieHeader,
     "Cart-Token": session.cartToken,
-  });
+  };
 }
 
 async function getWooCart(session: CartSession): Promise<WooCommerceCart> {
-  const res = await get(BASE_URL, { headers: createCartHeaders(session) });
-  return res.json();
+  return woo
+    .get("cart", {
+      headers: createCartHeaders(session),
+    })
+    .json<WooCommerceCart>();
 }
 
 async function addWooItem(
@@ -22,21 +22,24 @@ async function addWooItem(
   quantity = 1,
   session: CartSession,
 ): Promise<WooCommerceCart> {
-  const url = createUrlWithQuery(BASE_URL + "/add-item", [
-    { id: id },
-    { quantity: quantity },
-  ]);
-  const res = await post(url, { headers: createCartHeaders(session) });
-  return res.json();
+  return woo
+    .post("cart/add-item", {
+      headers: createCartHeaders(session),
+      searchParams: { id, quantity },
+    })
+    .json<WooCommerceCart>();
 }
 
 async function removeWooItem(
   key: string,
   session: CartSession,
 ): Promise<WooCommerceCart> {
-  const url = createUrlWithQuery(BASE_URL + "/remove-item", [{ key }]);
-  const res = await post(url, { headers: createCartHeaders(session) });
-  return res.json();
+  return woo
+    .post("cart/remove-item", {
+      headers: createCartHeaders(session),
+      searchParams: { key },
+    })
+    .json<WooCommerceCart>();
 }
 
 async function updateWooItem(
@@ -44,12 +47,12 @@ async function updateWooItem(
   quantity: number,
   session: CartSession,
 ): Promise<WooCommerceCart> {
-  const url = createUrlWithQuery(BASE_URL + "/update-item", [
-    { key },
-    { quantity },
-  ]);
-  const res = await post(url, { headers: createCartHeaders(session) });
-  return res.json();
+  return woo
+    .post("cart/update-item", {
+      headers: createCartHeaders(session),
+      searchParams: { key, quantity },
+    })
+    .json<WooCommerceCart>();
 }
 
 export { getWooCart, addWooItem, removeWooItem, updateWooItem };

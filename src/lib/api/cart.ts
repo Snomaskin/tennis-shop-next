@@ -1,32 +1,32 @@
 import type { WooCommerceCart } from "@/types/cart";
-import { get, post, del, patch } from "./fetcher";
+import { client } from "./kyApi";
 
 export async function getCart(): Promise<WooCommerceCart> {
-  const res = await get("/api/cart");
-  return res.json();
+  return client.get("cart").json();
 }
 
 export async function addItem(
   productId: number,
   quantity = 1,
 ): Promise<WooCommerceCart> {
-  const res = await post("/api/cart/items", {
-    data: { productId: productId, quantity: quantity },
-  });
-  return res.json();
+  return client
+    .post("cart/items", {
+      json: { productId, quantity },
+    })
+    .json();
 }
 
 export async function removeItem(itemKey: string): Promise<WooCommerceCart> {
-  const res = await del(`/api/cart/items/${itemKey}`);
-  return res.json();
+  return client.delete(`cart/items/${itemKey}`).json();
 }
 
 export async function updateItemQuantity(
   itemKey: string,
   quantity = 1,
 ): Promise<WooCommerceCart> {
-  const res = await patch(`/api/cart/items/${itemKey}`, {
-    data: { key: itemKey, quantity: quantity },
-  });
-  return res.json();
+  return client
+    .patch(`cart/items/${itemKey}`, {
+      json: { key: itemKey, quantity },
+    })
+    .json();
 }
