@@ -5,13 +5,18 @@ export default async function About() {
   const content = await getAllAboutContentFormatted();
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-30">
-      <h1 className="mb-6 text-3xl font-bold">About</h1>
+    <main className="flex min-h-screen max-w-2xl min-w-screen justify-center bg-amber-100 px-4 pb-5">
+      <div className="flex max-w-1/2 min-w-1/2 flex-col items-center justify-center gap-2">
+        <div className="flex w-full flex-col items-center self-center rounded-2xl border border-neutral-200/60 bg-white/50 p-5 backdrop-blur-sm">
+          <h1 className="text-2xl font-semibold text-neutral-800">About</h1>
+          <p className="mt-1 text-sm text-neutral-400">Learn more about us</p>
+        </div>
 
-      <div className="flex flex-col gap-4">
-        {content.map((section) => (
-          <AboutExpandable key={section.section} content={section} />
-        ))}
+        <div className="flex w-full flex-col items-center gap-3">
+          {content.map((section) => (
+            <AboutExpandable key={section.section} content={section} />
+          ))}
+        </div>
       </div>
     </main>
   );

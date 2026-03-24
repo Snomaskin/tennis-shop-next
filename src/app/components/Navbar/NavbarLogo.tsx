@@ -22,9 +22,9 @@ export default function NavbarLogo() {
       {/* big screen */}
       <Link
         href="/"
-        className="group relative hidden h-15 w-20 items-center justify-center rounded-3xl border-3 border-yellow-200 bg-linear-to-br from-green-100 to-green-500 duration-300 sm:flex"
+        className="group relative hidden h-15 w-20 items-center justify-center rounded-2xl border border-neutral-200/60 bg-amber-200/60 backdrop-blur-sm duration-300 hover:border-yellow-300 hover:bg-amber-300 hover:shadow-sm sm:flex"
       >
-        <div className="absolute h-full w-px bg-white" />
+        <div className="absolute h-full w-px bg-neutral-200/60" />
         <Image
           src={ballIcon}
           alt="ball"

@@ -24,7 +24,7 @@ export default function Card({ product, cardStyles, footerStyles }: Props) {
   return (
     <article
       className={twMerge(
-        "flex flex-col items-start rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md",
+        "flex flex-col items-start rounded-2xl border border-neutral-200/60 bg-white/50 p-4 shadow-sm backdrop-blur-sm transition-all hover:-translate-y-1 hover:shadow-md",
         cardStyles?.classNames,
       )}
     >
@@ -36,11 +36,11 @@ export default function Card({ product, cardStyles, footerStyles }: Props) {
         height={100}
       />
 
-      <span className="mb-1 line-clamp-2 text-lg font-medium text-gray-800">
+      <span className="mb-1 line-clamp-2 text-lg font-semibold text-neutral-800">
         {product.name}
       </span>
 
-      <p className="mb-4 font-semibold text-green-600">
+      <p className="mb-4 text-sm font-medium text-neutral-400">
         ${product.prices.price.toFixed(2)}
       </p>
 

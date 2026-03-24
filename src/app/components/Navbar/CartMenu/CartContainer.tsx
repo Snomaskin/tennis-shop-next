@@ -22,7 +22,7 @@ export default function CartContainer({ hideCart }: { hideCart: () => void }) {
     loadCart();
   }, [loadCart]);
 
-  if (fetchStatus === "loading")
+  if (fetchStatus === "loading" && cart === undefined)
     return (
       <div className="flex h-40 w-40 items-center justify-center rounded-2xl bg-yellow-200">
         <Spinner />
@@ -33,8 +33,8 @@ export default function CartContainer({ hideCart }: { hideCart: () => void }) {
   if (!cart?.items.length) return <EmptyCart />;
 
   return (
-    <div className="flex h-full min-w-92 flex-col overflow-hidden rounded-2xl border border-neutral-200/60 bg-gradient-to-br from-neutral-50 via-white to-neutral-100/50 shadow-2xl">
-      <div className="border-b border-neutral-200/60 bg-white/80 px-6 py-5">
+    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200/60 bg-linear-to-b from-white/20 to-white/80 shadow-2xl sm:min-w-120">
+      <div className="border-b border-neutral-200/60 px-6 py-5">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold tracking-tight text-neutral-900">
@@ -46,7 +46,7 @@ export default function CartContainer({ hideCart }: { hideCart: () => void }) {
               e.stopPropagation();
               hideCart();
             }}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-500 transition-all duration-200 hover:rotate-90 hover:cursor-pointer hover:bg-neutral-100 hover:text-neutral-700"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-neutral-500 duration-200 hover:rotate-90 hover:text-neutral-700"
           >
             <X className="h-5 w-5" />
           </button>
@@ -55,7 +55,7 @@ export default function CartContainer({ hideCart }: { hideCart: () => void }) {
 
       <CartContent cart={cart} />
 
-      <div className="border-t border-neutral-200/60 bg-white/80 px-6 py-5">
+      <div className="border-t border-neutral-200/60 px-6 py-5">
         <MenuButton label="Proceed to Checkout" onClick={handleCheckout} />
       </div>
     </div>

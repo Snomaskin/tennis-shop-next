@@ -6,7 +6,6 @@ import CartItem from "@/app/components/Navbar/CartMenu/CartItem";
 import { useCheckout } from "../hooks/useCheckout";
 import { checkoutSteps } from "@/config/checkout/checkoutSteps";
 import { MoveLeft, MoveRight, MapPin, CreditCard } from "lucide-react";
-import { useEffect } from "react";
 
 export default function Review() {
   const cart = useCartData();
@@ -77,7 +76,7 @@ export default function Review() {
           <>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {cart.items.map((item) => (
-                <CartItem key={item.id} item={item} />
+                <CartItem key={item.id} item={item} qtyControl={false} />
               ))}
             </div>
 
@@ -95,7 +94,7 @@ export default function Review() {
                 <button
                   type="button"
                   onClick={() => prev()}
-                  className="group flex cursor-pointer items-center gap-2 rounded-xl border border-neutral-200 px-4 py-2.5 text-sm font-semibold text-neutral-500 transition-all duration-200 hover:border-neutral-300 hover:text-neutral-700"
+                  className="group flex cursor-pointer items-center gap-2 rounded-xl border border-neutral-200 px-4 py-2.5 text-sm font-semibold text-neutral-500 duration-200 hover:border-neutral-300 hover:text-neutral-700"
                 >
                   <span className="text-base leading-none transition-transform duration-200 group-hover:-translate-x-0.5">
                     <MoveLeft size={16} />
@@ -105,7 +104,7 @@ export default function Review() {
 
                 <button
                   onClick={() => next()}
-                  className="group flex cursor-pointer items-center gap-2 rounded-xl border-2 border-transparent bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:border-yellow-300"
+                  className="group flex shrink-0 cursor-pointer items-center gap-2 rounded-xl bg-emerald-400 px-5 py-2.5 text-base font-semibold text-white duration-200 hover:ring-3 hover:ring-yellow-300/90"
                 >
                   Place Order
                   <span className="text-base leading-none transition-transform duration-200 group-hover:translate-x-0.5">

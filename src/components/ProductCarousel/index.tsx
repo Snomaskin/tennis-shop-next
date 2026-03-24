@@ -30,7 +30,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const total = products.length;
-      const baseAngles = products.map((_, i) => (i / total) * Math.PI * 3);
+      const baseAngles = products.map((_, i) => (i / total) * Math.PI * 2);
 
       const render = () => {
         itemsRef.current.forEach((el, i) => {
@@ -105,7 +105,6 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
           style={{
             width: "100%",
             height: "100%",
-            transformStyle: "preserve-3d",
             transform: "rotateZ(-30deg)",
           }}
         >

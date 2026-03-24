@@ -18,7 +18,7 @@ export default function EmblaCard({
   return (
     <>
       <motion.div
-        className="relative h-20 w-20 cursor-pointer overflow-hidden rounded-2xl bg-white hover:scale-105 hover:shadow-sm"
+        className="relative h-20 w-20 cursor-pointer overflow-hidden rounded-2xl duration-200 hover:scale-105 hover:shadow-sm"
         onClick={() => {
           onClick?.();
           setIsSelected(true);
@@ -45,7 +45,8 @@ export default function EmblaCard({
                   <Card
                     product={product}
                     cardStyles={{
-                      classNames: "hover:translate-y-0 hover:shadow-none",
+                      classNames:
+                        "hover:translate-y-0 hover:shadow-none bg-white",
                     }}
                     footerStyles={{
                       className: "min-w-66 min-h-12",

@@ -65,31 +65,31 @@ export default function NavItemWithToggle({
   };
 
   return (
-    <div
-      ref={menuRef}
-      className="relative shrink-0"
-      onMouseEnter={() => (controlled ? onOpen?.() : setInternalOpen(true))}
-      onMouseLeave={() =>
-        !isSticky && (controlled ? onClose?.() : setInternalOpen(false))
-      }
-      onClick={handleClick}
-    >
-      <NavItem
-        label={label}
-        imgUrl={imgUrl}
-        badge={badge}
-        isActive={open}
-        href={href}
-      />
-
+    <>
       <div
-        ref={dropdownRef}
-        className={`absolute top-full left-0 max-w-96 pt-3 ${
-          open ? "block" : "hidden"
-        }`}
+        ref={menuRef}
+        className="shrink-0"
+        onMouseEnter={() => (controlled ? onOpen?.() : setInternalOpen(true))}
+        onMouseLeave={() =>
+          !isSticky && (controlled ? onClose?.() : setInternalOpen(false))
+        }
+        onClick={handleClick}
       >
-        {children}
+        <NavItem
+          label={label}
+          imgUrl={imgUrl}
+          badge={badge}
+          isActive={open}
+          href={href}
+        />
+
+        <div
+          ref={dropdownRef}
+          className={`fixed pt-0.5 ${open ? "block" : "hidden"}`}
+        >
+          {children}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

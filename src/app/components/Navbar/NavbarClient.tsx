@@ -23,7 +23,7 @@ export default function NavbarClient({ shopMenus, otherItems }: Props) {
       onOpen={() => setOpenKey(menu.key)}
       onClose={() => setOpenKey((k) => (k === menu.category.id ? null : k))}
     >
-      <div className="relative top-2 left-1/2 z-50 mx-auto flex h-30 w-70 max-w-7xl -translate-x-1/2 items-center justify-center rounded-2xl bg-white shadow-md">
+      <div className="relative top-2 left-1/2 z-50 mx-auto flex h-30 w-70 max-w-7xl -translate-x-1/2 items-center justify-center rounded-2xl bg-linear-to-b from-white/20 to-white/80 shadow-md backdrop-blur-lg">
         <EmblaCarousel
           products={menu.products}
           onClick={() => setOpenKey((k) => (k === menu.category.id ? null : k))}

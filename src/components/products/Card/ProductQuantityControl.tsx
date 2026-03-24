@@ -1,4 +1,5 @@
 import { useCartActions, useCartState } from "@/stores/useCart";
+import { CartItem } from "@/types/cart";
 import { Product } from "@/types/products";
 import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
@@ -6,7 +7,7 @@ import { useState, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 
 type Props = {
-  product: Product;
+  product: Product | CartItem;
   styles?: {
     className?: string;
     classNames?: {
@@ -46,7 +47,7 @@ export default function ProductQuantityControl({
 
   const { className, classNames } = styles;
   const plusMinusStyles = twMerge(
-    "flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-600 transition-all hover:bg-white hover:shadow-sm active:scale-90",
+    "flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-600 transition-all hover:bg-white hover:shadow-sm active:scale-90 shrink-0",
     classNames?.plusMinusButtons,
   );
 
@@ -58,7 +59,7 @@ export default function ProductQuantityControl({
         {!cartItem ? (
           <motion.button
             className={twMerge(
-              "w-full cursor-pointer rounded-xl bg-blue-600 py-2 font-medium text-white transition-colors hover:bg-blue-700 active:scale-95",
+              "w-full cursor-pointer rounded-xl bg-emerald-400 py-2 font-medium text-white transition-colors hover:bg-emerald-700 active:scale-95",
               classNames?.addButton,
             )}
             onClick={handleAddItem}

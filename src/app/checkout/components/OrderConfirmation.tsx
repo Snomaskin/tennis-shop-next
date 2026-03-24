@@ -6,7 +6,6 @@ import { useFormContext } from "react-hook-form";
 import { CheckoutFormSchema } from "@/config/checkout/checkoutSchema";
 import { useCheckout } from "../hooks/useCheckout";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export default function OrderConfirmation() {
   const cart = useCartData();
@@ -77,7 +76,7 @@ export default function OrderConfirmation() {
               <>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {cart.items.map((item) => (
-                    <CartItem key={item.id} item={item} />
+                    <CartItem key={item.id} item={item} qtyControl={false} />
                   ))}
                 </div>
 
@@ -92,7 +91,7 @@ export default function OrderConfirmation() {
                     </span>
                   </div>
 
-                  <a
+                  <Link
                     href="/"
                     className="group flex cursor-pointer items-center gap-2 rounded-xl border-2 border-transparent bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:border-yellow-300"
                     onClick={() => {
@@ -101,7 +100,7 @@ export default function OrderConfirmation() {
                     }}
                   >
                     Continue Shopping
-                  </a>
+                  </Link>
                 </div>
               </>
             )}

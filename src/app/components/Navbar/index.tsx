@@ -25,6 +25,7 @@ export default async function Navbar() {
       label={item.label}
       href={item.href}
       imgUrl={item.imgUrl}
+      icon={item.imgComponent}
     />
   ));
 

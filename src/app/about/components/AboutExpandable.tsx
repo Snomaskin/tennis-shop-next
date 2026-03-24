@@ -12,16 +12,20 @@ export default function AboutExpandable({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="mb-4 overflow-hidden rounded-lg border shadow-sm">
+    <div className="w-full overflow-hidden rounded-2xl border border-neutral-200/60 bg-white/50 backdrop-blur-sm">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex w-full items-center justify-between bg-gray-100 px-4 py-3 text-left hover:cursor-pointer hover:bg-gray-200"
+        className="group flex w-full cursor-pointer items-center justify-between px-5 py-4 text-left transition-colors duration-200 hover:bg-white/60"
       >
-        <span className="text-lg font-semibold">{content.section}</span>
+        <span className="text-sm font-semibold text-neutral-800">
+          {content.section}
+        </span>
         <span
-          className={`transition-transform duration-300 ${isOpen ? "group-hover:-rotate-90" : "group-hover:rotate-90"}`}
+          className={`text-neutral-400 transition-transform duration-300 ${
+            isOpen ? "rotate-90" : "group-hover:rotate-90"
+          }`}
         >
-          <ChevronRight />
+          <ChevronRight size={18} />
         </span>
       </button>
 
@@ -35,11 +39,15 @@ export default function AboutExpandable({
             transition={{ duration: 0.3, ease: "easeInOut" }}
             style={{ overflow: "hidden" }}
           >
-            <div className="border-t bg-white px-4 py-3">
+            <div className="border-t border-neutral-100 px-5 py-4">
               {content.fields.map((field) => (
-                <section key={field.name} className="mb-3">
-                  <h2 className="font-medium text-gray-800">{field.name}</h2>
-                  <p className="text-gray-600">{field.value}</p>
+                <section key={field.name} className="mb-3 last:mb-0">
+                  <h2 className="text-xs font-semibold tracking-wider text-neutral-400 uppercase">
+                    {field.name}
+                  </h2>
+                  <p className="mt-0.5 text-sm text-neutral-600">
+                    {field.value}
+                  </p>
                 </section>
               ))}
             </div>

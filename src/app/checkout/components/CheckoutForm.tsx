@@ -77,7 +77,7 @@ export default function CheckoutForm({ stepName, title, description }: Props) {
         <button
           type="button"
           onClick={() => handleNext()}
-          className="group flex shrink-0 cursor-pointer items-center gap-2 rounded-xl border-2 border-transparent bg-emerald-400 px-5 py-2.5 text-base font-semibold text-white transition-all duration-200 hover:border-yellow-300"
+          className="group flex shrink-0 cursor-pointer items-center gap-2 rounded-xl bg-emerald-400 px-5 py-2.5 text-base font-semibold text-white duration-200 hover:ring-3 hover:ring-yellow-300/90"
         >
           {nextStepLabel}
           <span className="text-base leading-none duration-200 group-hover:translate-x-0.5 group-hover:scale-120">

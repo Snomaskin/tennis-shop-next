@@ -8,13 +8,13 @@ export default function CartContent({ cart }: { cart: Cart }) {
         <ul className="list-none space-y-3">
           {cart.items.map((item) => (
             <li key={item.id}>
-              <CartItem item={item} />
+              <CartItem item={item} className={"bg-transparent"} />
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="border-t border-neutral-200 bg-gradient-to-b from-white/80 to-neutral-50/80 px-6 py-5 backdrop-blur-sm">
+      <div className="border-t border-neutral-200 px-6 py-5">
         <div className="mb-1 flex items-center justify-between">
           <span className="text-sm text-neutral-500">
             {cart.items_count} {cart.items_count > 1 ? "items" : "item"}
