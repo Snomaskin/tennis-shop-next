@@ -6,6 +6,7 @@ import { useFormContext } from "react-hook-form";
 import { CheckoutFormSchema } from "@/config/checkout/checkoutSchema";
 import { useCheckout } from "../hooks/useCheckout";
 import Link from "next/link";
+import LoadingScreen from "@/components/loaders/LoadingScreen";
 
 export default function OrderConfirmation() {
   const cart = useCartData();
@@ -20,9 +21,9 @@ export default function OrderConfirmation() {
   const shippingValues = getValues("shipping");
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center gap-4 px-4 pt-22 pb-5">
+    <div className="relative flex min-h-screen w-full overflow-hidden">
       {httpStatus === 200 && orderId ? (
-        <>
+        <div className="mx-auto mt-22 flex max-w-2xl flex-col items-center justify-center gap-4 pb-5">
           <div className="mb-2 flex w-full flex-col items-center self-center rounded-2xl border border-neutral-200/60 bg-white/50 p-6 backdrop-blur-sm">
             <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-400/15">
               <PackageCheck size={28} className="text-emerald-500" />
@@ -105,9 +106,9 @@ export default function OrderConfirmation() {
               </>
             )}
           </div>
-        </>
+        </div>
       ) : errorMessage ? (
-        <div className="mb-2 flex w-full flex-col items-center self-center rounded-2xl border border-neutral-200/60 bg-white/50 p-6 backdrop-blur-sm">
+        <div className="mt-22 mb-2 flex w-full max-w-2xl flex-col items-center self-center rounded-2xl border border-neutral-200/60 bg-white/50 p-6 backdrop-blur-sm">
           <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-400/15">
             <CircleAlert size={28} className="text-emerald-500" />
           </div>
@@ -116,7 +117,11 @@ export default function OrderConfirmation() {
           </h2>
           <p className="mt-1 text-sm text-neutral-400">Error: {errorMessage}</p>
         </div>
-      ) : null}
+      ) : (
+        <div className="flex items-center justify-center">
+          <LoadingScreen />
+        </div>
+      )}
     </div>
   );
 }

@@ -33,7 +33,7 @@ export default function CartContainer({ hideCart }: { hideCart: () => void }) {
   if (!cart?.items.length) return <EmptyCart />;
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200/60 bg-linear-to-b from-white/20 to-white/80 shadow-2xl sm:min-w-120">
+    <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-linear-to-b from-white/20 to-white/80 shadow-2xl sm:min-w-120">
       <div className="border-b border-neutral-200/60 px-6 py-5">
         <div className="flex items-center justify-between">
           <div>
