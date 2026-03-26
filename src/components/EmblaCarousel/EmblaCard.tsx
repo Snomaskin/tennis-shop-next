@@ -29,6 +29,7 @@ export default function EmblaCard({
           src={product.image.src}
           alt={product.name}
           fill
+          sizes="(max-width: 768px) 100vw, 300px"
         />
       </motion.div>
 

@@ -6,6 +6,7 @@ import useOutsideClick from "@/lib/utils/useOutsideClick";
 import { motion, AnimatePresence } from "motion/react";
 import ProductQuantityControl from "../products/Card/ProductQuantityControl";
 import { twMerge } from "tailwind-merge";
+import Spinner from "../loaders/Spinner";
 
 export default function Card({
   product,
@@ -18,6 +19,7 @@ export default function Card({
   const [isOverflowing, setIsOverflowing] = useState(false);
   const internalRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useOutsideClick(internalRef, () => setIsExpanded(false));
 
@@ -50,16 +52,22 @@ export default function Card({
     >
       <div
         className={twMerge(
-          "relative h-20 w-20 shrink-0 cursor-pointer overflow-hidden rounded-2xl duration-200 hover:scale-105",
+          "relative flex h-20 w-20 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-2xl duration-200 hover:scale-105",
           isExpanded && "rounded-r-none hover:scale-100",
         )}
         onClick={() => setIsExpanded(!isExpanded)}
       >
+        {!loaded && <Spinner className="h-5 w-5 border-2" />}
         <Image
           src={product.image.src}
           alt={product.name}
           fill
-          className="rounded-2xl"
+          className={twMerge(
+            "rounded-2xl",
+            loaded ? "relative opacity-100" : "absolute opacity-0",
+          )}
+          sizes="(max-width: 768px) 100vw, 300px"
+          onLoad={() => setLoaded(true)}
         />
       </div>
       <AnimatePresence initial={false}>
