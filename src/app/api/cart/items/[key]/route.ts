@@ -3,7 +3,10 @@ import type { UpdateWooCartItemRequest } from "@/types/api";
 import { getOrSetCartCookie } from "@/lib/cartSession";
 import { withErrorHandling } from "@/lib/api/utils/withErrorHandling";
 
-export async function DELETE({ params }: { params: Promise<{ key: string }> }) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ key: string }> },
+) {
   return withErrorHandling(async () => {
     const { key } = await params;
     const session = await getOrSetCartCookie();
