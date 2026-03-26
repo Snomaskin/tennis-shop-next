@@ -1,16 +1,16 @@
 import { getOrSetCartCookie } from "@/lib/cartSession";
 import formatCheckout from "@/lib/api/woocommerce/utils/formatCheckout";
-import ky, { HTTPError } from "ky";
+import ky from "ky";
 import config from "@/lib/api/config";
 import { NextResponse } from "next/server";
+import { withErrorHandling } from "@/lib/api/utils/withErrorHandling";
 
 const BASE_URL = `${config.woo}/checkout`;
 
 export async function POST(req: Request) {
-  const session = await getOrSetCartCookie();
-  const formattedDetails = formatCheckout(await req.json());
-
-  try {
+  return withErrorHandling(async () => {
+    const session = await getOrSetCartCookie();
+    const formattedDetails = formatCheckout(await req.json());
     const data = await ky
       .post(BASE_URL, {
         headers: {
@@ -20,19 +20,6 @@ export async function POST(req: Request) {
         json: formattedDetails,
       })
       .json();
-
-    return NextResponse.json({ ok: true, data });
-  } catch (err) {
-    if (err instanceof HTTPError) {
-      const error = await err.response.json();
-      return NextResponse.json(
-        { ok: false, error },
-        { status: err.response.status },
-      );
-    }
-    return NextResponse.json(
-      { ok: false, error: { message: "Internal server error" } },
-      { status: 500 },
-    );
-  }
+    return NextResponse.json({ data });
+  });
 }

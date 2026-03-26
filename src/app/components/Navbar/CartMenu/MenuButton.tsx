@@ -10,6 +10,7 @@ export default function MenuButton({ label, onClick }: Props) {
     <button
       onClick={(e) => {
         e.preventDefault();
+        e.stopPropagation();
         onClick();
       }}
       className={`group relative w-full cursor-pointer overflow-hidden rounded-xl border-2 border-neutral-200 bg-yellow-100 px-6 py-4 font-semibold text-neutral-900 shadow-lg shadow-neutral-200/30 duration-300 hover:border-neutral-300 hover:bg-yellow-200 hover:shadow-xl hover:shadow-neutral-300/40`}
