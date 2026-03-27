@@ -1,4 +1,4 @@
-import { CheckoutFormSchema } from "@/config/checkout/checkoutSchema";
+import { CheckoutFormSchema } from "@/config/checkout/schema";
 
 export default function formatCheckout(data: CheckoutFormSchema) {
   return {

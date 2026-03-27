@@ -1,10 +1,10 @@
 "use client";
 import { useFormContext } from "react-hook-form";
-import type { CheckoutFormSchema } from "@/config/checkout/checkoutSchema";
+import type { CheckoutFormSchema } from "@/config/checkout/schema";
 import { useCartData } from "@/stores/useCart";
 import CartItem from "@/app/components/Navbar/CartMenu/CartItem";
 import { useCheckout } from "../hooks/useCheckout";
-import { checkoutSteps } from "@/config/checkout/checkoutSteps";
+import { checkoutSteps } from "@/config/checkout/steps";
 import { MoveLeft, MoveRight, MapPin, CreditCard } from "lucide-react";
 
 export default function Review() {

@@ -2,12 +2,9 @@ import FormField from "@/components/inputs/FormField";
 import { Path, useFormContext } from "react-hook-form";
 import { useCheckout } from "../hooks/useCheckout";
 import { formatLabel } from "@/lib/utils/textFormat";
-import { checkoutSteps } from "@/config/checkout/checkoutSteps";
+import { checkoutSteps } from "@/config/checkout/steps";
 import { MoveRight, MoveLeft } from "lucide-react";
-import {
-  CheckoutFormSchema,
-  autoFillValues,
-} from "@/config/checkout/checkoutSchema";
+import { CheckoutFormSchema, autoFillValues } from "@/config/checkout/schema";
 
 interface Props {
   stepName: keyof CheckoutFormSchema;

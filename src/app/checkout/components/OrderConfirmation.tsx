@@ -3,7 +3,7 @@ import { useCartReset, useCartData } from "@/stores/useCart";
 import CartItem from "@/app/components/Navbar/CartMenu/CartItem";
 import { PackageCheck, Truck, MapPin, CircleAlert } from "lucide-react";
 import { useFormContext } from "react-hook-form";
-import { CheckoutFormSchema } from "@/config/checkout/checkoutSchema";
+import { CheckoutFormSchema } from "@/config/checkout/schema";
 import { useCheckout } from "../hooks/useCheckout";
 import Link from "next/link";
 import LoadingScreen from "@/components/loaders/LoadingScreen";

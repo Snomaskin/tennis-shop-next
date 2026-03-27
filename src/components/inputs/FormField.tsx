@@ -1,5 +1,5 @@
 import { useFormContext, Path } from "react-hook-form";
-import { CheckoutFormSchema } from "@/config/checkout/checkoutSchema";
+import { CheckoutFormSchema } from "@/config/checkout/schema";
 
 type Props = {
   name: Path<CheckoutFormSchema>;

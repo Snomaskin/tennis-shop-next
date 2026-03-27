@@ -1,20 +1,18 @@
 "use client";
 import { useForm, FormProvider } from "react-hook-form";
 import { useCheckout } from "./hooks/useCheckout";
-import { checkoutSteps } from "@/config/checkout/checkoutSteps";
+import { checkoutSteps } from "@/config/checkout/steps";
 import ky, { HTTPError } from "ky";
 import {
   checkoutSchema,
   CheckoutFormSchema,
   defaultCheckoutValues,
-} from "@/config/checkout/checkoutSchema";
+} from "@/config/checkout/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "motion/react";
 import { CheckoutResponseBody } from "@/types/api";
 import { useCartReset } from "@/stores/useCart";
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
 
 export default function Checkout() {
   const methods = useForm<CheckoutFormSchema>({
@@ -30,8 +28,6 @@ export default function Checkout() {
   } = useCheckout();
   const resetCart = useCartReset();
   const CurrentStepComponent = checkoutSteps[stepIndex].component;
-  const pathname = usePathname();
-  const hasLeft = pathname !== "/checkout";
 
   const onSubmit = async (data: CheckoutFormSchema) => {
     try {
