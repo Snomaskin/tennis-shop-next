@@ -67,7 +67,7 @@ export default function OrderConfirmation() {
                   {shippingValues.street}
                 </p>
                 <p className="text-sm text-neutral-500">
-                  {shippingValues.zipCode} {shippingValues.city},{" "}
+                  {shippingValues.postCode} {shippingValues.city},{" "}
                   {shippingValues.country}
                 </p>
               </div>

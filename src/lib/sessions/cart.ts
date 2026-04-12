@@ -1,24 +1,18 @@
 import { cookies } from "next/headers";
+import { cookieSettings } from "./cookieSettings";
+import { woo } from "../api/kyApi";
 
 export type CartSession = {
   cookieHeader: string;
   cartToken: string;
 };
 
-const cookieSettings = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
-  path: "/",
-  maxAge: 60 * 60 * 24 * 30,
-} as const;
-
 export async function getOrSetCartCookie(): Promise<CartSession> {
   const cookieStore = await cookies();
   let token = cookieStore.get("cart_token")?.value;
 
   if (!token) {
-    const res = await fetch(`${process.env.WOO_API_URL}/cart`);
+    const res = await woo.get("cart");
     const newToken = res.headers.get("Cart-Token");
 
     if (!newToken) {
@@ -28,11 +22,13 @@ export async function getOrSetCartCookie(): Promise<CartSession> {
     token = newToken;
     cookieStore.set("cart_token", token, cookieSettings);
   } else if (token) {
-    const verifyToken = await fetch(`${process.env.WOO_API_URL}/cart`, {
-      headers: {
-        "Cart-Token": token,
-      },
-    }).then((res) => res.headers.get("Cart-Token"));
+    const verifyToken = await woo
+      .get("cart", {
+        headers: {
+          "Cart-Token": token,
+        },
+      })
+      .then((res) => res.headers.get("Cart-Token"));
     if (verifyToken && token != verifyToken) {
       token = verifyToken;
       cookieStore.set("cart_token", token, cookieSettings);

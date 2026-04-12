@@ -1,4 +1,4 @@
-import { CartSession } from "@/lib/cartSession";
+import { CartSession } from "@/lib/sessions/cart";
 
 interface AddToWooCartRequest {
   productId: number;

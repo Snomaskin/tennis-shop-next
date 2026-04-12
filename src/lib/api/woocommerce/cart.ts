@@ -1,6 +1,6 @@
 import { woo } from "../kyApi";
 import type { WooCommerceCart } from "@/types/cart";
-import type { CartSession } from "@/lib/cartSession";
+import type { CartSession } from "@/lib/sessions/cart";
 
 function createCartHeaders(session: CartSession) {
   return {

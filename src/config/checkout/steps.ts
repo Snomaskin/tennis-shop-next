@@ -18,7 +18,7 @@ export const checkoutSteps = [
       "shipping.firstName",
       "shipping.lastName",
       "shipping.street",
-      "shipping.zipCode",
+      "shipping.postCode",
       "shipping.city",
       "shipping.country",
     ],

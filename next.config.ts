@@ -6,8 +6,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: new URL(process.env.WOO_API_URL!).hostname,
+        protocol: process.env.NODE_ENV === "development" ? "http" : "https",
+        hostname: new URL(process.env.BASE_API_URL!).hostname,
       },
     ],
 

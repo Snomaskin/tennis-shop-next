@@ -1,15 +1,17 @@
-import { useFormContext, Path } from "react-hook-form";
-import { CheckoutFormSchema } from "@/config/checkout/schema";
+import { useFormContext, Path, FieldValues } from "react-hook-form";
 
-type Props = {
-  name: Path<CheckoutFormSchema>;
+type Props<T extends FieldValues> = {
+  name: Path<T>;
   label: string;
   type?: string;
 };
 
-export default function FormField({ name, label, type = "text" }: Props) {
-  const { register, getFieldState, formState } =
-    useFormContext<CheckoutFormSchema>();
+export default function FormField<T extends FieldValues>({
+  name,
+  label,
+  type = "text",
+}: Props<T>) {
+  const { register, getFieldState, formState } = useFormContext<T>();
 
   const { error, invalid } = getFieldState(name, formState);
 

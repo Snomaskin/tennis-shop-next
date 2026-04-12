@@ -43,7 +43,7 @@ export default function Review() {
                 {shippingValues.street}
               </p>
               <p className="text-sm text-neutral-500">
-                {shippingValues.zipCode} {shippingValues.city}
+                {shippingValues.postCode} {shippingValues.city}
               </p>
               <p className="text-sm text-neutral-500">
                 {shippingValues.country}
