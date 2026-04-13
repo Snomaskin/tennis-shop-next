@@ -8,6 +8,7 @@ interface Props {
   inputs: { name: string; label: string; type: string }[];
   secondaryButtonLink?: { label: string; href: string };
   primaryButton: { label: string };
+  isSubmitting?: boolean;
 }
 
 export default function AuthCard({
@@ -16,6 +17,7 @@ export default function AuthCard({
   inputs,
   secondaryButtonLink,
   primaryButton,
+  isSubmitting,
 }: Props) {
   return (
     <div className="h-full w-full bg-amber-100">
@@ -49,11 +51,14 @@ export default function AuthCard({
           <button
             type="submit"
             className="group flex shrink-0 cursor-pointer items-center gap-2 rounded-xl bg-emerald-400 px-5 py-2.5 text-base font-semibold text-white duration-200 hover:ring-3 hover:ring-yellow-300/90"
+            disabled={isSubmitting}
           >
             {primaryButton.label}
-            <span className="text-base leading-none duration-200 group-hover:translate-x-0.5 group-hover:scale-120">
-              <MoveRight size={20} />
-            </span>
+            {!isSubmitting && (
+              <span className="text-base leading-none duration-200 group-hover:translate-x-0.5 group-hover:scale-120">
+                <MoveRight size={20} />
+              </span>
+            )}
           </button>
         </div>
       </div>

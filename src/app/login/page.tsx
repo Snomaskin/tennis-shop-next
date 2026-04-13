@@ -15,6 +15,8 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
     defaultValues: { username: "", password: "" },
   });
+  const { isSubmitting } = methods.formState;
+
   const router = useRouter();
   const [loginSuccess, setLoginSuccess] = useState(false);
 
@@ -44,14 +46,15 @@ export default function Login() {
             { name: "password", label: "Password", type: "password" },
           ]}
           secondaryButtonLink={{ label: "Create account", href: "/signup" }}
-          primaryButton={{ label: "Sign in" }}
+          primaryButton={{ label: isSubmitting ? "Please wait..." : "Sign in" }}
+          isSubmitting={isSubmitting}
         />
       </form>
       {loginSuccess && (
         <PopUpMessage
           title="Login success"
           open={loginSuccess}
-          description="Redericting to account overview"
+          description="Redirecting to account overview"
         />
       )}
     </FormProvider>

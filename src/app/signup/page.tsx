@@ -3,7 +3,6 @@ import { SignupSchema, signupSchema } from "@/config/user/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import ky from "ky";
-
 import AuthCard from "@/components/inputs/AuthCard";
 import { getErrorMessageAsync } from "@/lib/utils/errors";
 import PopUpMessage from "@/components/PopUpMessage";
@@ -16,8 +15,10 @@ export default function Signup() {
     resolver: zodResolver(signupSchema),
     defaultValues: { username: "", email: "", password: "" },
   });
+  const { isSubmitting } = methods.formState;
   const [signupSuccess, setSignupSuccess] = useState(false);
   const router = useRouter();
+
   const onSubmit = async (data: SignupSchema) => {
     try {
       const res = await ky.post("/api/auth/signup", { json: data });
@@ -45,7 +46,8 @@ export default function Signup() {
             { name: "password", label: "Password", type: "password" },
           ]}
           secondaryButtonLink={{ label: "Back to login", href: "/login" }}
-          primaryButton={{ label: "Sign Up" }}
+          primaryButton={{ label: isSubmitting ? "Please wait..." : "Sign Up" }}
+          isSubmitting={isSubmitting}
         />
       </form>
       {signupSuccess && (
