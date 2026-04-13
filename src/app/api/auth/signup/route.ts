@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
   try {
     const res = await jwt
       .post("token", {
-        json: { username: email, password },
+        json: { username, password },
       })
       .json<JwtResponse>();
 

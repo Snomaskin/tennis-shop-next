@@ -5,6 +5,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import ky from "ky";
 import AuthCard from "@/components/inputs/AuthCard";
 import { getErrorMessageAsync } from "@/lib/utils/errors";
+import { useRouter } from "next/navigation";
+import PopUpMessage from "@/components/PopUpMessage";
+import { useState } from "react";
 
 export default function Login() {
   const methods = useForm<LoginSchema>({
@@ -12,11 +15,19 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
     defaultValues: { username: "", password: "" },
   });
+  const router = useRouter();
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const onSubmit = async (data: LoginSchema) => {
     try {
-      await ky.post("/api/auth/login", { json: data }).json();
-      console.log("success");
+      const res = await ky.post("/api/auth/login", { json: data });
+      if (res.ok) {
+        setLoginSuccess(true);
+        setTimeout(() => {
+          router.push("/account");
+          router.refresh();
+        }, 3000);
+      }
     } catch (e) {
       console.error(await getErrorMessageAsync(e));
     }
@@ -36,6 +47,13 @@ export default function Login() {
           primaryButton={{ label: "Sign in" }}
         />
       </form>
+      {loginSuccess && (
+        <PopUpMessage
+          title="Login success"
+          open={loginSuccess}
+          description="Redericting to account overview"
+        />
+      )}
     </FormProvider>
   );
 }
