@@ -11,7 +11,7 @@ const statusStyles: Record<string, string> = {
 };
 
 function formatPrice(cents: string) {
-  return (parseInt(cents) / 100).toFixed(2);
+  return (Number(cents) / 10).toFixed(2);
 }
 
 export default function OrderCard({ order }: { order: Order }) {
