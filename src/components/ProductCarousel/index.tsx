@@ -25,12 +25,32 @@ function map(
 export default function ProductCarousel({ products }: { products: Product[] }) {
   const wheelRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<HTMLDivElement[]>([]);
+  const selectedRef = useRef(false);
   const rotation = useRef({ value: 0 });
+  const loopRef = useRef<gsap.core.Tween | null>(null);
+
+  const handleSelect = (selected: boolean) => {
+    selectedRef.current = selected;
+    if (loopRef.current) {
+      gsap.to(loopRef.current, {
+        timeScale: selected ? 0 : 0.2,
+        duration: 0.5,
+      });
+    }
+  };
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const total = products.length;
       const baseAngles = products.map((_, i) => (i / total) * Math.PI * 2);
+
+      itemsRef.current.forEach((el) => {
+        gsap.set(el, {
+          willChange: "transform",
+          xPercent: 500,
+          yPercent: 800,
+        });
+      });
 
       const render = () => {
         itemsRef.current.forEach((el, i) => {
@@ -44,19 +64,13 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
           const bendAmount = 100;
           const bend = (x / (scaledRadius * 1.4)) ** 2 * bendAmount;
           const y = Math.cos(angle) * scaledRadius * 0.5 + bend;
-          gsap.set(el, {
-            x,
-            y,
-            force3D: true,
-            willChange: "transform",
-            xPercent: 500,
-            yPercent: 800,
-            scale,
-          });
+
+          const opacity = depth < 0.5 ? 1 : map(depth, 0.5, 1, 1, 0);
+          gsap.set(el, { x, y, scale, opacity });
         });
       };
 
-      const loop = gsap.to(rotation.current, {
+      loopRef.current = gsap.to(rotation.current, {
         value: `+=${Math.PI * 2}`,
         duration: 10,
         repeat: -1,
@@ -64,14 +78,15 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
         onUpdate: render,
       });
 
-      const slow = gsap.to(loop, { timeScale: 0, duration: 0.5 });
+      const slow = gsap.to(loopRef.current, { timeScale: 0.2, duration: 0.5 });
 
       Observer.create({
         target: wheelRef.current,
         type: "wheel,touch,pointer",
         wheelSpeed: -1,
         onChange: (self) => {
-          loop.timeScale(-self.deltaY * 0.03);
+          if (selectedRef.current) return;
+          loopRef.current!.timeScale(-self.deltaY * 0.03);
           slow.invalidate().restart();
         },
       });
@@ -116,6 +131,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
                 itemsRef.current[i] = el;
               }}
               product={p}
+              onSelect={handleSelect}
             />
           ))}
         </div>

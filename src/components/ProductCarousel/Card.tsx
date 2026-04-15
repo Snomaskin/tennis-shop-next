@@ -11,9 +11,11 @@ import Spinner from "../loaders/Spinner";
 export default function Card({
   product,
   ref,
+  onSelect,
 }: {
   product: Product;
   ref?: React.Ref<HTMLDivElement>;
+  onSelect: (selected: boolean) => void;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -30,6 +32,7 @@ export default function Card({
         el.scrollWidth > (el.parentElement?.offsetWidth ?? el.offsetWidth),
       );
     }
+    onSelect(isExpanded);
   }, [isExpanded]);
 
   const setRefs = (element: HTMLDivElement | null) => {
