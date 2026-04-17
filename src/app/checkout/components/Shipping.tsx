@@ -4,7 +4,7 @@ export default function Shipping() {
   return (
     <CheckoutForm
       title="Shipping"
-      description="Where should we send your order?"
+      description="Use auto-fill for faster checkout"
       stepName="shipping"
     />
   );

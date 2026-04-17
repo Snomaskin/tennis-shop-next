@@ -39,7 +39,7 @@ export default function Signup() {
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <AuthCard
           h2="Sign up today!"
-          description="Get amazing discounts as a verified customer"
+          description="Become part of the club"
           inputs={[
             { name: "username", label: "Username", type: "text" },
             { name: "email", label: "Email", type: "email" },

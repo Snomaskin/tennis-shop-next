@@ -40,7 +40,7 @@ export default function Login() {
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <AuthCard
           h2="Welcome, dear customer"
-          description="Sign in to your account to continue"
+          description="Sign in or create an account"
           inputs={[
             { name: "username", label: "Username", type: "text" },
             { name: "password", label: "Password", type: "password" },

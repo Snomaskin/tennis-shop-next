@@ -9,7 +9,7 @@ export default async function TennisShopLanding() {
     <div className="relative min-h-screen overflow-hidden bg-amber-100">
       <TennisCourt />
 
-      <div className="absolute top-[100px] z-20 flex w-full flex-col items-center">
+      <div className="absolute top-[100px] z-20 hidden w-full flex-col items-center sm:flex">
         <div className="flex flex-col items-center rounded-full px-6 py-4 pb-6 shadow-xl outline-2 outline-gray-100/60 backdrop-blur-sm">
           <p className="mb-1 font-['Doto',serif] text-xs font-semibold tracking-[0.4em] text-amber-900/60 uppercase select-none">
             Welcome to

@@ -15,7 +15,7 @@ export default function CartItem({
   return (
     <div
       className={twMerge(
-        `group relative flex items-center gap-4 rounded-xl border border-neutral-200/60 bg-white/50 p-4 backdrop-blur-sm duration-300 hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-lg`,
+        `group relative flex max-w-80 items-center gap-4 rounded-xl border border-neutral-200/60 p-4 backdrop-blur-sm duration-300 hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-lg sm:max-w-none`,
         className,
       )}
     >
@@ -28,7 +28,7 @@ export default function CartItem({
           className="h-full w-full overflow-hidden rounded-lg object-cover duration-500 group-hover:scale-105"
         />
 
-        <div className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-linear-to-br from-emerald-500 to-teal-600 text-xs font-semibold text-white shadow-lg ring-2 ring-white">
+        <div className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300/60 text-xs font-semibold text-white shadow-lg">
           {item.quantity}
         </div>
       </div>

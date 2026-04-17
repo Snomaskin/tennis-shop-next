@@ -5,7 +5,7 @@ export default function Payment() {
     <CheckoutForm
       stepName="payment"
       title="Payment"
-      description="Please enter your payment details below"
+      description="Auto-fill here too, if you want. We won't judge."
     />
   );
 }

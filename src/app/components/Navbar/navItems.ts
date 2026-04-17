@@ -11,7 +11,7 @@ type NavItemType = {
 };
 const getNavItems = (session: boolean): NavItemType[] => {
   return [
-    { key: "about", label: "About us", href: "/about", imgUrl: question },
+    { key: "about", label: "About", href: "/about", imgUrl: question },
     session
       ? {
           key: "account",

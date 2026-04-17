@@ -9,25 +9,25 @@ export default function Overview() {
   const { next } = useCheckout();
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center gap-4 px-4 pt-22 pb-5">
-      <div className="mb-2 flex w-full flex-col items-center self-center rounded-2xl border border-neutral-200/60 bg-white/50 p-5 backdrop-blur-sm">
-        <h2 className="text-2xl font-semibold text-neutral-800">
-          Order Overview
-        </h2>
-        <p className="mt-1 text-sm text-neutral-400">
-          Review your items before continuing
-        </p>
-      </div>
-
+    <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-4 pt-22 pb-5">
       {cart && (
-        <div className="flex w-full max-w-2xl flex-col gap-4">
+        <div className="flex w-full flex-col gap-5 rounded-2xl border border-neutral-200/60 bg-white/50 p-5 backdrop-blur-sm">
+          <div className="flex flex-col items-center">
+            <h2 className="text-2xl font-semibold text-neutral-800">
+              Order Overview
+            </h2>
+            <p className="mt-1 text-sm text-neutral-400">
+              Great picks! And such affordable prices too.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {cart.items.map((item) => (
               <CartItem key={item.id} item={item} />
             ))}
           </div>
 
-          <div className="mt-2 flex items-center justify-between rounded-2xl border border-neutral-200/60 bg-white/50 p-4 backdrop-blur-sm">
+          <div className="flex items-center justify-between">
             <div className="flex flex-col gap-0.5">
               <span className="text-xs text-neutral-400">
                 {cart.items_count} {cart.items_count === 1 ? "item" : "items"}
@@ -46,7 +46,7 @@ export default function Overview() {
               Shipping
               <span className="text-base leading-none duration-200 group-hover:translate-x-0.5 group-hover:scale-120">
                 <MoveRight size={20} />
-              </span>{" "}
+              </span>
             </button>
           </div>
         </div>
