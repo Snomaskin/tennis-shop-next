@@ -17,6 +17,7 @@ export default function Signup() {
   });
   const { isSubmitting } = methods.formState;
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
 
   const onSubmit = async (data: SignupSchema) => {
@@ -31,6 +32,7 @@ export default function Signup() {
       }
     } catch (e) {
       console.error(await getErrorMessageAsync(e));
+      setErrorMessage("An error occurred during signup");
     }
   };
 
@@ -50,13 +52,18 @@ export default function Signup() {
           isSubmitting={isSubmitting}
         />
       </form>
-      {signupSuccess && (
-        <PopUpMessage
-          title="Signup success"
-          open={signupSuccess}
-          description="Redirecting to shop. Place an order and see it on your account overview"
-        />
-      )}
+
+      <PopUpMessage
+        title="Signup success"
+        open={signupSuccess}
+        description="Redirecting to shop. Place an order and see it on your account overview"
+      />
+      <PopUpMessage
+        title="Signup failed"
+        open={!!errorMessage}
+        onClose={() => setErrorMessage(null)}
+        description={errorMessage || "An error occurred during signup"}
+      />
     </FormProvider>
   );
 }

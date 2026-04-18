@@ -19,6 +19,7 @@ export default function Login() {
 
   const router = useRouter();
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginSchema) => {
     try {
@@ -32,6 +33,7 @@ export default function Login() {
       }
     } catch (e) {
       console.error(await getErrorMessageAsync(e));
+      setErrorMessage("Invalid username or password");
     }
   };
 
@@ -50,13 +52,19 @@ export default function Login() {
           isSubmitting={isSubmitting}
         />
       </form>
-      {loginSuccess && (
-        <PopUpMessage
-          title="Login success"
-          open={loginSuccess}
-          description="Redirecting to account overview"
-        />
-      )}
+
+      <PopUpMessage
+        title="Login success"
+        open={loginSuccess}
+        description="Redirecting to account overview"
+      />
+
+      <PopUpMessage
+        title="Login failed"
+        open={!!errorMessage}
+        onClose={() => setErrorMessage(null)}
+        description={errorMessage || "An error occurred during login"}
+      />
     </FormProvider>
   );
 }
